@@ -1,6 +1,7 @@
+
 .header {
   display: grid;
-  grid-template-columns: 25% 25% 30% 20%;
+  grid-template-columns: 15% 25%  20%;
   }
 
  .main {
@@ -13,3 +14,87 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   }
+
+  .container1{
+    display: inherit;
+    margin: 100px 0;
+
+  }
+  .container2{
+    
+      display: inherit;
+      margin: 50px 0;
+  
+    }
+  
+  .container3{
+    display: inherit;
+    margin: 50px 0;
+
+  }
+  
+  
+  .icon{
+    margin: 30px;
+    padding: 44px;
+
+  }
+
+  .btnunlocks{
+    margin: 30px;
+  }
+
+  .btncashupgrades{
+    margin: 30px;
+
+  }
+  .btnangelupgrades{
+    margin: 30px;
+  }
+
+  .btnManagers{
+    margin: 30px;
+  }
+
+  .btninvestors{
+    margin: 30px;
+  }
+
+  .byonedoge{
+    height: 20px;
+    width: 100px;
+    text-align: initial;
+  }
+
+  .byonexrp{
+    height: 20px;
+    width: 100px;
+    text-align: initial;
+  }
+ 
+  
+  .byonesolana{
+    height: 20px;
+    width: 100px;
+    text-align: initial;
+  }
+  
+  .byonebnb{
+    height: 20px;
+    width: 100px;
+    text-align: initial;
+  }
+  
+  .byoneethereum{
+    height: 20px;
+    width: 100px;
+    text-align: initial;
+  }
+  
+  .byonebitcoin{
+    height: 20px;
+    width: 100px;
+    text-align: initial;
+  }
+  
+
