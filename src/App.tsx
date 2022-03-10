@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { World } from './world';
-import { Services } from './service';
-import Product from './Product';
+import { Product, World } from './world';
+import { Services } from './Services';
 import {transform} from "./utils";
 import ProductComponent from './Product';
 
@@ -11,6 +10,8 @@ function App() {
   const [services, setServices] = useState(new Services(""));
   const [world, setWorld] = useState(new World());
   const [username, setUsername] = useState("")
+  let [qtmulti , setQtmulti]= useState("")
+  const [money,setMoney] = useState(world.money)
 
   useEffect(() => {
 
@@ -23,19 +24,48 @@ function App() {
    
    }, [])
 
-   function onProductionDone(): void {
+   function onProductionDone(p: Product): void {
     // calcul de la somme obtenue par la production du produit
-    //let gain = p.revenu
+    let gain = p.revenu
     // ajout de la somme à l’argent possédé
-    //addToScore(gain)
+    addToScore(gain)
+   }
+
+
+    function addToScore(gain: number): void{
+      world.score += gain
+  }
+
+  function getMoney(){
+    return world.money
+  }
+  
+  function cycle() {
+    switch (qtmulti){
+      case "x1":
+        qtmulti = "x10";
+        break;
+      case "x10":
+        qtmulti = "x100";
+        break;
+      case "x100":
+        qtmulti = "MAX";
+        break;
+      case "MAX":
+        qtmulti = "x1";
+        break;
+ }
 }
+
+  
+
   return (
     <div>
        <div className="header">
-      <div className="argent">  
+      <div className="argent">
            <div> <img id="logoMonde" src={services.server + world.logo} alt={"logo.png"}/><span id="worldName"> {world.name} </span></div>
            <span dangerouslySetInnerHTML={{__html: transform(world.money)}}></span>
-      <div> <button type="button">multiplicateur</button></div>
+      <div> Multiplicateur :<button onClick={cycle}> {qtmulti} </button></div>
       <div> ID du joueur </div>
     <span dangerouslySetInnerHTML={{__html: transform(world.score)}}/>
 </div>
@@ -53,9 +83,12 @@ function App() {
           </div>   
       </div>
       <div className="products">
-                {world.products.product.map( p =>
-                    <ProductComponent prod={ p } onProductionDone={onProductionDone} services={ services }  />
-                    )}
+          <ProductComponent  onProductionDone={onProductionDone} qtmulti={qtmulti} prod={world.products.product[0]}  services={services} money={money}/>
+          <ProductComponent  onProductionDone={onProductionDone} qtmulti={qtmulti} prod={world.products.product[1]}  services={services} money={money}/>
+          <ProductComponent  onProductionDone={onProductionDone} qtmulti={qtmulti} prod={world.products.product[2]}  services={services} money={money}/>
+          <ProductComponent  onProductionDone={onProductionDone} qtmulti={qtmulti} prod={world.products.product[3]}  services={services} money={money}/>
+          <ProductComponent  onProductionDone={onProductionDone} qtmulti={qtmulti} prod={world.products.product[4]}  services={services} money={money}/>
+          <ProductComponent  onProductionDone={onProductionDone} qtmulti={qtmulti} prod={world.products.product[5]}  services={services} money={money}/>         
             </div>
       </div>
   );

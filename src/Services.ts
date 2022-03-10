@@ -4,7 +4,7 @@ import { World } from './world';
 
 
 export class Services {
-    server = "http://localhost:3000/"
+    server = "http://localhost:5500/"
     //server = "https://isiscapitalist.kk.kurasawa.fr"
     api = this.server + "adventureisis/generic";
     user = "";
