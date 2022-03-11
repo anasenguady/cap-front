@@ -41,7 +41,7 @@ export default function Manager({world, services,voirManagers}: ManagerProps){
         <button disabled={world.money < manager.seuil}> HIRE ME!</button>
     </div>
  </div>
-)
+        )
  }
 
  </div>

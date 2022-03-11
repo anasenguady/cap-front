@@ -7,6 +7,7 @@ import ProductComponent from './Product';
 import Manager from './Manager';
 import Angels from './Angels';
 import Upgrades from './cashUpgrades';
+import AngelUpgrades from './angelUpgrades';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
   const [affAngels,setAngels] = useState(false)
   const [affUpgrades,setUpgrades] = useState(false)
   const [pallier, setPallier]= useState(new Pallier())
+  const [affangelUpgrades,setAngelUpgrades] = useState(false)
 
   useEffect(() => {
 
@@ -43,6 +45,8 @@ function App() {
       setManagers(true)
       setAngels(false)
       setUpgrades(false)
+      setAngelUpgrades(false)
+      
     }
     else {
       setManagers(false)
@@ -54,6 +58,7 @@ function App() {
       setAngels(true)
       setManagers(false)
       setUpgrades(false)
+      setAngelUpgrades(false)
     }
     else {
       setAngels(false)
@@ -65,9 +70,21 @@ function App() {
       setUpgrades(true)
       setManagers(false)
       setAngels(false)
+      setAngelUpgrades(false)
     }
     else {
       setUpgrades(false)
+    }
+  } 
+  function voirAngelUpgrades(){
+    if (affangelUpgrades ==false){
+      setAngelUpgrades(true)
+      setUpgrades(false)
+      setManagers(false)
+      setAngels(false)
+    }
+    else {
+      setAngelUpgrades(false)
     }
   } 
 
@@ -113,7 +130,7 @@ function App() {
       <div className="container1"> 
         <button className="btncote"> Unlocks</button>
         <button className="btncote" onClick={voirUpgrades}> Cash Upgrades</button>
-        <button className="btncote"> Angel Upgrades</button>
+        <button className="btncote" onClick={voirAngelUpgrades}> Angel Upgrades</button>
         <button className="btncote" onClick={voirManagers}> Managers</button>
         <button className="btncote" onClick={voirInvestors}> Investors</button>
       </div>   
@@ -135,6 +152,9 @@ function App() {
     }
     { affUpgrades && <div className='btnUpgrades'>
     <Upgrades world={world} services={ services } voirUpgrades={voirUpgrades} pallier={pallier}/></div>
+    }
+    { affangelUpgrades && <div className='btnangelUpgrades'>
+    <AngelUpgrades world={world} services={ services } voirAngelUpgrades={voirAngelUpgrades} pallier={pallier}/></div>
     }</div>
     </div>
   );
