@@ -1,18 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useDebugValue, useEffect, useState } from 'react';
 import './App.css';
-import { Product, World } from './world';
+import { Pallier, Product, World } from './world';
 import { Services } from './Services';
 import {transform} from "./utils";
 import ProductComponent from './Product';
 import Manager from './Manager';
+import Angels from './Angels';
+import Upgrades from './cashUpgrades';
 
 
 function App() {
   const [services, setServices] = useState(new Services(""));
   const [world, setWorld] = useState(new World());
   let [qtmulti , setQtmulti]= useState("1")
-  const [money,setMoney] = useState(world.money)
   const [affManager,setManagers] = useState(false)
+  const [affAngels,setAngels] = useState(false)
+  const [affUpgrades,setUpgrades] = useState(false)
+  const [pallier, setPallier]= useState(new Pallier())
 
   useEffect(() => {
 
@@ -37,9 +41,33 @@ function App() {
    function voirManagers(){
     if (affManager ==false){
       setManagers(true)
+      setAngels(false)
+      setUpgrades(false)
     }
     else {
       setManagers(false)
+    }
+  } 
+
+  function voirInvestors(){
+    if (affAngels==false){
+      setAngels(true)
+      setManagers(false)
+      setUpgrades(false)
+    }
+    else {
+      setAngels(false)
+    }
+  } 
+
+  function voirUpgrades(){
+    if (affUpgrades ==false){
+      setUpgrades(true)
+      setManagers(false)
+      setAngels(false)
+    }
+    else {
+      setUpgrades(false)
     }
   } 
 
@@ -47,9 +75,7 @@ function App() {
       world.score += gain
   }
 
-  function getMoney(){
-    return world.money
-  }
+
   
   function cycleMulti() {
     if (qtmulti == "1"){
@@ -64,23 +90,19 @@ function App() {
       if (qtmulti == "MAX"){
         setQtmulti("1")
     }
-    
-    /*function engageManager(){
-      if(world.money >= world.managers.pallier){
+    function addToScore(value : number) : void{
+      setWorld(world=>({ ...world, money: world.money + value , score: world.score+value}))
 
+    }}
+    function manageravailablity(): void {
 
-
-      }
     }
-    */
-    
- }
 
   return (
   <div>
       <div className="header">
         <div> <img id="logoMonde" src={services.server + world.logo} alt={"logo.png"}/><span id="worldName"> {world.name} </span></div>
-        <span dangerouslySetInnerHTML={{__html: transform(world.money)}}></span>
+        <div><span dangerouslySetInnerHTML={{__html: transform(world.money)}}></span>$</div>
         <div> Multiplicateur :<button onClick={cycleMulti}> {qtmulti} </button>
       </div>
       <div> ID du joueur </div>
@@ -90,10 +112,10 @@ function App() {
     <div className="main">
       <div className="container1"> 
         <button className="btncote"> Unlocks</button>
-        <button className="btncote"> Cash Upgrades</button>
+        <button className="btncote" onClick={voirUpgrades}> Cash Upgrades</button>
         <button className="btncote"> Angel Upgrades</button>
         <button className="btncote" onClick={voirManagers}> Managers</button>
-        <button className="btncote"> Investors</button>
+        <button className="btncote" onClick={voirInvestors}> Investors</button>
       </div>   
       <div className="products">
         <div><ProductComponent prod={ world.products.product[0] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }/> </div>
@@ -104,11 +126,17 @@ function App() {
         <div><ProductComponent prod={ world.products.product[5] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }/></div>
       </div>
       { affManager && <div className='btnManagers'>
-      <Manager world={world} services={ services } voirManagers={voirManagers} />
+      <Manager world={world} services={ services } voirManagers={voirManagers}/>
     </div>
+    
     }
+    { affAngels && <div className='btnInvestors'>
+    <Angels world={world} services={ services } voirInvestors={voirInvestors}/></div>
+    }
+    { affUpgrades && <div className='btnUpgrades'>
+    <Upgrades world={world} services={ services } voirUpgrades={voirUpgrades} pallier={pallier}/></div>
+    }</div>
     </div>
-  </div>
   );
 }
 export default App;
