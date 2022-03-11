@@ -38,7 +38,7 @@ export class Product {
         palliers : { "pallier" : Pallier[]};
         lastupdate: number = 0
         progressbarvalue:number = 0
-        qtmulti : string = "x1"
+        qtmulti : string = "1"
     
         constructor() {
             this.palliers = { "pallier": [] }
@@ -55,4 +55,3 @@ export class Pallier {
     typeratio: string = ""
     unlocked: boolean = false
 }
-

@@ -1,46 +1,30 @@
-
-
 .header {
   display: grid;
-  grid-template-columns: 15% 25%  20%;
+  grid-template-columns: 25% 25% 30% 20%;
   }
+.main {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    }
 
- .main {
-
-  display: grid;
-  grid-template-columns: 20% 80%;
-  }
-
-  
- .product {
+.products{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  }
+}
 
-  .container1{
-    display: inherit;
-    margin: 100px 0;
+#logoMonde{
+  height: 50px;
+  width: 50px;
+  top : 30px;
+}
+.round {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%
+     }
 
-  }
-  .container2{
-    
-      display: inherit;
-      margin: 50px 0;
-  
-    }
-  
-  .container3{
-    display: inherit;
-    margin: 50px 0;
-
-  }
-  
-  
-  
-
-  .btnunlocks{
+  .btncote{
     margin: 30px;
-
    background-color: #FFFFFF;
    border: 0;
    border-radius: .5rem;
@@ -61,156 +45,30 @@
    touch-action: manipulation;
 }
 
-.btnunlocks:hover {
+.btncote:hover {
   background-color: rgb(249,250,251);
 }
 
-.btnunlocks:focus {
+.btncote:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
 
-.btnunlocks:focus-visible {
+.btncote:focus-visible {
   box-shadow: none;
 }
-  
 
-  .btncashupgrades{
-    margin: 30px;
-    background-color: #FFFFFF;
-    border: 0;
-    border-radius: .5rem;
-    box-sizing: border-box;
-    color: #111827;
-    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-    font-size: .875rem;
-    font-weight: 600;
-    line-height: 1.25rem;
-    padding: .75rem 1rem;
-    text-align: center;
-    text-decoration: none #D1D5DB solid;
-    text-decoration-thickness: auto;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
+.modal {
+  position: absolute;
+  z-index: 1;
+  top: 50px;
+  width: 767px;
+  height: 600px;
+  overflow: auto;
+  background-color: white;
+  border: solid;
+  left: 20%
+ }
 
-  }
-  .btncashupgrades:hover {
-    background-color: rgb(249,250,251);
-  }
-  
-  .btncashupgrades:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-  
-  .btncashupgrades:focus-visible {
-    box-shadow: none;
-  }
-  .btnangelupgrades{
-    margin: 30px;
-    background-color: #FFFFFF;
-    border: 0;
-    border-radius: .5rem;
-    box-sizing: border-box;
-    color: #111827;
-    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-    font-size: .875rem;
-    font-weight: 600;
-    line-height: 1.25rem;
-    padding: .75rem 1rem;
-    text-align: center;
-    text-decoration: none #D1D5DB solid;
-    text-decoration-thickness: auto;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
 
-    
-  }
-  .btnangelupgrades:hover {
-    background-color: rgb(249,250,251);
-  }
-  
-  .btnangelupgrades:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-  
-  .btnangelupgrades:focus-visible {
-    box-shadow: none;
-  }
-
-  .btnManagers{
-    margin: 30px;
-    background-color: #FFFFFF;
-    border: 0;
-    border-radius: .5rem;
-    box-sizing: border-box;
-    color: #111827;
-    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-    font-size: .875rem;
-    font-weight: 600;
-    line-height: 1.25rem;
-    padding: .75rem 1rem;
-    text-align: center;
-    text-decoration: none #D1D5DB solid;
-    text-decoration-thickness: auto;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-  }
-  .btnManagers:hover {
-    background-color: rgb(249,250,251);
-  }
-  
-  .btnManagers:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-  
-  .btnManagers:focus-visible {
-    box-shadow: none;
-  }
-
-  .btninvestors{
-    margin: 30px;
-    background-color: #FFFFFF;
-    border: 0;
-    border-radius: .5rem;
-    box-sizing: border-box;
-    color: #111827;
-    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-    font-size: .875rem;
-    font-weight: 600;
-    line-height: 1.25rem;
-    padding: .75rem 1rem;
-    text-align: center;
-    text-decoration: none #D1D5DB solid;
-    text-decoration-thickness: auto;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-  }
-  .btninvestors:hover {
-    background-color: rgb(249,250,251);
-  }
-  
-  .btninvestors:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
-  }
-  
-  .btninvestors:focus-visible {
-    box-shadow: none;
-  }
-
-  
+ 

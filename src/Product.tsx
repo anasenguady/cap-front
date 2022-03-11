@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import App from "./App";
 import ProgressBar from "./ProgressBar";
 import { Services } from "./Services";
@@ -18,7 +18,7 @@ import { Product, World } from "./world";
    {
     const [progress, setProgress] = useState(0)
     const savedCallback = useRef(calcScore)
-   
+    let prix = 1
     
 
     useEffect(() => savedCallback.current = calcScore)
@@ -29,17 +29,17 @@ import { Product, World } from "./world";
     }
 }, [])
 
-function startFabrication(){
+function startFabrication() : void{
     if (prod.quantite>0) {
         prod.timeleft = prod.vitesse
         prod.lastupdate = Date.now()
     }
     calcMaxCanBuy();
-
 }
 
 function calcScore(){
-    if (prod.timeleft == 0){
+    if (prod != null){
+    if (prod.timeleft === 0){
         setProgress(0)
     }
     else{
@@ -56,36 +56,62 @@ function calcScore(){
         }
         setProgress(prod.progressbarvalue)
     }
-}
+}}
 
 
-    function calcMaxCanBuy(): void {
+    function calcMaxCanBuy() {
         const qtmax = (Math.log(1 - (money*(1-prod.croissance))/prod.cout))/Math.log(prod.croissance)
         if (qtmax <= 0){
             prod.quantite = 0
         }else{
             prod.quantite = Math.floor(qtmax)
         }
-        
+        return prod.quantite
     }
 
-    
+    function qtmultiChiffre(){
+        if (qtmulti === "1"){
+            prix = 1
+        }else{
+            if (qtmulti ==="10"){
+                prix = 10
+            }else{
+                if (qtmulti ==="100"){
+                    prix = 100
+                }else{
+                    if (qtmulti ==="MAX"){
+                        prix =Math.floor(Math.log(1 - money * (1 - prod.croissance) / prod.cout) / Math.log(prod.croissance))
+                    }
 
+            }
+        }
+    } return prix
+    }
+    
+    function prixAchatMax(max : number){
+        return Math.round(prod.cout * (1 - Math.pow(prod.croissance, max))/ (1 - prod.croissance)*100)/100
+    }
+    
+if (prod == null){
+    return(
+        <div></div>
+    )
+}else{
    return (
-    <div>  
-            <div className="produit1"> 
-            <div className="lesdeux">
-            <div className="lepremier">
-            <img className="round" src={services.server + prod.logo} style={{width: '120px', borderRadius:'50%',transform: 'translate(+10%)'}}/>
-            </div>
-            <div className="lesecond">0</div>
-            </div>
-            <br></br>
-            <div className="progress"> 
-            <div className="progress__bar"></div>
-            </div>
-            <p id='fabrication' onClick = { () => startFabrication()} > PRODUIRE {prod.name} POUR {prod.cout} CREDIT(S) ECTS</p>
-            </div>
+    <div className="Produits">
+        <div className="infoproduits">
+            <img className="round" onClick={startFabrication} src={services.server + prod.logo} alt="logo"/>
+            <div className="qte">Quantité: {prod.quantite}</div>
         </div>
+           
+        <div className="revenu">Revenu: {prod.revenu}</div>
+            <div className="prixStand">
+                <button type="button">Acheter x{qtmultiChiffre()} Prix: {prixAchatMax(qtmultiChiffre())} </button>
+            </div>
+            <div className="temps">Temps: {prod.vitesse}s</div>
+            <div className="progressBar">
+                <ProgressBar transitionDuration={"0.1s"} customLabel={" "} completed={progress}/>
+            </div>
+    </div>
    );
-   }
+   }}
