@@ -4,25 +4,28 @@ import { Product, World } from './world';
 import { Services } from './Services';
 import {transform} from "./utils";
 import ProductComponent from './Product';
+import Manager from './Manager';
 
 
 function App() {
   const [services, setServices] = useState(new Services(""));
   const [world, setWorld] = useState(new World());
-  const [username, setUsername] = useState("")
-  let [qtmulti , setQtmulti]= useState("")
+  let [qtmulti , setQtmulti]= useState("1")
   const [money,setMoney] = useState(world.money)
+  const [affManager,setManagers] = useState(false)
 
   useEffect(() => {
 
-    let services = new Services(username)
+    let services = new Services("")
     setServices(services)
     services.getWorld().then(response => {
     setWorld(response.data)
+    console.log(response);
     }
     )
-   
    }, [])
+
+   
 
    function onProductionDone(p: Product): void {
     // calcul de la somme obtenue par la production du produit
@@ -31,6 +34,14 @@ function App() {
     addToScore(gain)
    }
 
+   function voirManagers(){
+    if (affManager ==false){
+      setManagers(true)
+    }
+    else {
+      setManagers(false)
+    }
+  } 
 
     function addToScore(gain: number): void{
       world.score += gain
@@ -40,59 +51,64 @@ function App() {
     return world.money
   }
   
-  function cycle() {
-    switch (qtmulti){
-      case "x1":
-        qtmulti = "x10";
-        break;
-      case "x10":
-        qtmulti = "x100";
-        break;
-      case "x100":
-        qtmulti = "MAX";
-        break;
-      case "MAX":
-        qtmulti = "x1";
-        break;
- }
-}
+  function cycleMulti() {
+    if (qtmulti == "1"){
+      setQtmulti("10")
+    }else 
+    if (qtmulti == "10"){
+        setQtmulti("100")
+      }else
+        if (qtmulti == "100"){
+        setQtmulti("MAX")
+      }else 
+      if (qtmulti == "MAX"){
+        setQtmulti("1")
+    }
+    
+    /*function engageManager(){
+      if(world.money >= world.managers.pallier){
 
-  
+
+
+      }
+    }
+    */
+    
+ }
 
   return (
-    <div>
-       <div className="header">
-      <div className="argent">
-           <div> <img id="logoMonde" src={services.server + world.logo} alt={"logo.png"}/><span id="worldName"> {world.name} </span></div>
-           <span dangerouslySetInnerHTML={{__html: transform(world.money)}}></span>
-      <div> Multiplicateur :<button onClick={cycle}> {qtmulti} </button></div>
+  <div>
+      <div className="header">
+        <div> <img id="logoMonde" src={services.server + world.logo} alt={"logo.png"}/><span id="worldName"> {world.name} </span></div>
+        <span dangerouslySetInnerHTML={{__html: transform(world.money)}}></span>
+        <div> Multiplicateur :<button onClick={cycleMulti}> {qtmulti} </button>
+      </div>
       <div> ID du joueur </div>
-    <span dangerouslySetInnerHTML={{__html: transform(world.score)}}/>
-</div>
-</div>
+      
+    </div>
 
-<div className="main">
-          <div className="container1"> 
-              <img src={services.server + world.logo}/> 
-              <span> {world.name} </span>
-                <button className="btnunlocks"> Unlocks</button>
-                <button className="btncashupgrades"> Cash Upgrades</button>
-                <button className="btnangelupgrades"> Angel Upgrades</button>
-                <button className="btnManagers"> Managers</button>
-                <button className="btninvestors"> Investors</button>
-          </div>   
-      </div>
+    <div className="main">
+      <div className="container1"> 
+        <button className="btncote"> Unlocks</button>
+        <button className="btncote"> Cash Upgrades</button>
+        <button className="btncote"> Angel Upgrades</button>
+        <button className="btncote" onClick={voirManagers}> Managers</button>
+        <button className="btncote"> Investors</button>
+      </div>   
       <div className="products">
-          <ProductComponent  onProductionDone={onProductionDone} qtmulti={qtmulti} prod={world.products.product[0]}  services={services} money={money}/>
-          <ProductComponent  onProductionDone={onProductionDone} qtmulti={qtmulti} prod={world.products.product[1]}  services={services} money={money}/>
-          <ProductComponent  onProductionDone={onProductionDone} qtmulti={qtmulti} prod={world.products.product[2]}  services={services} money={money}/>
-          <ProductComponent  onProductionDone={onProductionDone} qtmulti={qtmulti} prod={world.products.product[3]}  services={services} money={money}/>
-          <ProductComponent  onProductionDone={onProductionDone} qtmulti={qtmulti} prod={world.products.product[4]}  services={services} money={money}/>
-          <ProductComponent  onProductionDone={onProductionDone} qtmulti={qtmulti} prod={world.products.product[5]}  services={services} money={money}/>         
-            </div>
+        <div><ProductComponent prod={ world.products.product[0] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }/> </div>
+        <div><ProductComponent prod={ world.products.product[3] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }/></div>
+        <div><ProductComponent prod={ world.products.product[1] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }/></div>       
+        <div><ProductComponent prod={ world.products.product[4] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }/></div>
+        <div><ProductComponent prod={ world.products.product[2] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }/></div>
+        <div><ProductComponent prod={ world.products.product[5] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }/></div>
       </div>
+      { affManager && <div className='btnManagers'>
+      <Manager world={world} services={ services } voirManagers={voirManagers} />
+    </div>
+    }
+    </div>
+  </div>
   );
 }
-
-
 export default App;
