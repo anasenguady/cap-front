@@ -19,6 +19,9 @@ function App() {
   const [affUpgrades,setUpgrades] = useState(false)
   const [pallier, setPallier]= useState(new Pallier())
   const [affangelUpgrades,setAngelUpgrades] = useState(false)
+  const [username, setUsername] = useState("")
+
+  
 
   useEffect(() => {
 
@@ -38,7 +41,17 @@ function App() {
     let gain = p.revenu
     // ajout de la somme à l’argent possédé
     addToScore(gain)
+  
    }
+  /*function zero(){
+     if (world.money < 0 ){
+       
+       world.money = 0
+     }else{
+       
+     }
+   }*/
+   
 
    function voirManagers(){
     if (affManager ==false){
@@ -88,9 +101,18 @@ function App() {
     }
   } 
 
-    function addToScore(gain: number): void{
+ /*   function addToScore(gain: number): void{
       world.score += gain
   }
+  */
+  function addToScore(gain : number) : void{
+    setWorld(world=>({ ...world, money: world.money + gain , score: world.score+gain}))
+
+  }
+  /*function updateMoney(gain:number){
+     //Met à jour l'argent du joueur de manière positive (revenu gain positif) ou négative (achat gain négatif)
+    setWorld(world => ({...world, money:world.money + gain}))
+}*/
 
 
   
@@ -107,22 +129,29 @@ function App() {
       if (qtmulti == "MAX"){
         setQtmulti("1")
     }
-    function addToScore(value : number) : void{
-      setWorld(world=>({ ...world, money: world.money + value , score: world.score+value}))
-
-    }}
+    }
     function manageravailablity(): void {
 
     }
+    function onBuy(cout : number , prod : Product):void{
+      addToScore(-cout)
+      services.putProduct(prod) 
+
+    }
+
+
+    
 
   return (
   <div>
+   <div className="bgimg">
+ 
       <div className="header">
         <div> <img id="logoMonde" src={services.server + world.logo} alt={"logo.png"}/><span id="worldName"> {world.name} </span></div>
-        <div><span dangerouslySetInnerHTML={{__html: transform(world.money)}}></span>$</div>
-        <div> Multiplicateur :<button onClick={cycleMulti}> {qtmulti} </button>
+        <div className="money"><span dangerouslySetInnerHTML={{__html: transform(world.money)}} ></span>$</div>
+        <div className="multi"> Multiplicateur :<button onClick={cycleMulti}> {qtmulti} </button>
       </div>
-      <div> ID du joueur </div>
+      <div className ="id"> <div> Username <input type="text" id="usernameInput" value={username} /></div> </div>
       
     </div>
 
@@ -135,12 +164,12 @@ function App() {
         <button className="btncote" onClick={voirInvestors}> Investors</button>
       </div>   
       <div className="products">
-        <div><ProductComponent prod={ world.products.product[0] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }/> </div>
-        <div><ProductComponent prod={ world.products.product[3] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }/></div>
-        <div><ProductComponent prod={ world.products.product[1] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }/></div>       
-        <div><ProductComponent prod={ world.products.product[4] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }/></div>
-        <div><ProductComponent prod={ world.products.product[2] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }/></div>
-        <div><ProductComponent prod={ world.products.product[5] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }/></div>
+        <div className="a"><ProductComponent prod={ world.products.product[0] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }onBuy={onBuy}/> </div>
+        <div className="a"><ProductComponent prod={ world.products.product[3] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }onBuy={onBuy}/></div>
+        <div className="a"><ProductComponent prod={ world.products.product[1] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }onBuy={onBuy}/></div>       
+        <div className="a"><ProductComponent prod={ world.products.product[4] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }onBuy={onBuy}/></div>
+        <div className="a"><ProductComponent prod={ world.products.product[2] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }onBuy={onBuy}/></div>
+        <div className="a"><ProductComponent prod={ world.products.product[5] } onProductionDone={onProductionDone} qtmulti={qtmulti} money={world.money} services={ services }onBuy={onBuy}/></div>
       </div>
       { affManager && <div className='btnManagers'>
       <Manager world={world} services={ services } voirManagers={voirManagers}/>
@@ -156,6 +185,7 @@ function App() {
     { affangelUpgrades && <div className='btnangelUpgrades'>
     <AngelUpgrades world={world} services={ services } voirAngelUpgrades={voirAngelUpgrades} pallier={pallier}/></div>
     }</div>
+    </div>
     </div>
   );
 }
