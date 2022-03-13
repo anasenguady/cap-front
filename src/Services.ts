@@ -1,11 +1,11 @@
 import axios, { AxiosError, AxiosPromise } from 'axios';
 import React from 'react';
-import { World } from './world';
+import { Pallier, Product, World } from './world';
 
 
 export class Services {
-    server = "http://localhost:8080/"
-    //server = "https://isiscapitalist.kk.kurasawa.fr/"
+    //server = "http://localhost:8081/"
+    server = "https://isiscapitalist.kk.kurasawa.fr/"
     api = this.server + "adventureisis/generic";
     user = "";
     constructor(user: string) {
@@ -27,6 +27,17 @@ export class Services {
         headers: Services.setHeaders(this.user)
         }).catch(Services.handleError)
         }
+        
+        putProduct(product : Product): AxiosPromise<Response> {
+            return axios({
+                method: 'put',
+                url: this.api + '/product',
+                data: product,
+                headers: Services.setHeaders(this.user)
+            }).catch(Services.handleError)
+        }
+
+       
    }
 
 export default Services;

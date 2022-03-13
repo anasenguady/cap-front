@@ -25,10 +25,11 @@ return(
         <div> <h1 className="titleUpgrades">Faites des Upgrades !</h1> </div>
 
         <div> { world.upgrades.pallier.filter(pallier => !pallier.unlocked).map(pallier =>
-        <div key={pallier.idcible} className="managergrid">
+        <div key={pallier.idcible} className="upgradergrid">
         
     <div className="logo">
         <img alt="upgradeslogo" className="round" src= {services.server + pallier.logo}/>
+        
 
     </div>
     <div className="infosupgrade">
@@ -36,7 +37,7 @@ return(
          <div className="upgradecost"> { pallier.seuil} $</div>
     </div>
     <div onClick={() => buyUpgrade}>
-        <button disabled={world.money < pallier.seuil}> ACHETER </button>
+        <button className="btnupgrades" disabled={world.money < pallier.seuil}> ACHETER </button>
     </div>
  </div>
 )

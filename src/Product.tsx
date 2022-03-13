@@ -1,23 +1,30 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import App from "./App";
 import ProgressBar from "./ProgressBar";
 import { Services } from "./Services";
 import { Product, World } from "./world";
+import Box from '@mui/material/Box';
 
    type ProductProps = {
     prod: Product
+    onBuy : (cout: number, product:Product) => void,
     onProductionDone: (product: Product) => void,
     services: Services
     qtmulti : string
     money : number
-   }
+    
+        
+    }
+   
 
 
 
-   export default function ProductComponent({ prod,onProductionDone, services,qtmulti, money } : ProductProps)
+   export default function ProductComponent({ prod,onProductionDone, services,qtmulti, money, onBuy } : ProductProps)
    {
     const [progress, setProgress] = useState(0)
+    const [quantite , setQuantite ] = useState(0)
     const savedCallback = useRef(calcScore)
+    useEffect(() => savedCallback.current = calcScore)
     let prix = 1
     
 
@@ -29,37 +36,43 @@ import { Product, World } from "./world";
     }
 }, [])
 
-function startFabrication() : void{
-    if (prod.quantite>0) {
-        prod.timeleft = prod.vitesse
-        prod.lastupdate = Date.now()
-    }
-    calcMaxCanBuy();
-}
+function startFabrication() {
+    console.log("clq")
+    
+    prod.timeleft=prod.vitesse
+    prod.lastupdate = Date.now()
+   setProgress(prod.progressbarvalue)
+ }
+ 
 
 function calcScore(){
     if (prod != null){
-    if (prod.timeleft === 0){
+    if (prod.timeleft == 0){
         setProgress(0)
     }
     else{
-        prod.lastupdate = Date.now()
+        let now = Date.now()
         prod.timeleft = prod.timeleft- (Date.now() - prod.lastupdate)
+        prod.lastupdate= now
+        
 
         if(prod.timeleft<=0){
+            setProgress(0)
+            
             prod.timeleft = 0
-            prod.progressbarvalue = 0
+            
             onProductionDone(prod)
         }
         else{
             prod.progressbarvalue = ((prod.vitesse - prod.timeleft) / prod.vitesse) * 100
         }
         setProgress(prod.progressbarvalue)
-    }
-}}
+        
+    }}
+}
 
 
-    function calcMaxCanBuy() {
+    /*function calcMaxCanBuy() {
         const qtmax = (Math.log(1 - (money*(1-prod.croissance))/prod.cout))/Math.log(prod.croissance)
         if (qtmax <= 0){
             prod.quantite = 0
@@ -68,6 +81,7 @@ function calcScore(){
         }
         return prod.quantite
     }
+    */
 
     function qtmultiChiffre(){
         if (qtmulti === "1"){
@@ -91,6 +105,18 @@ function calcScore(){
     function prixAchatMax(max : number){
         return Math.round(prod.cout * (1 - Math.pow(prod.croissance, max))/ (1 - prod.croissance)*100)/100
     }
+
+    function acheterPtoduit():void{
+        prod.quantite = prod.quantite + parseFloat(qtmulti)
+        let cout= prixAchatMax(qtmultiChiffre())
+        setQuantite(prod.quantite)
+        onBuy(cout ,prod)
+
+
+    }
+
+
+    
     
 if (prod == null){
     return(
@@ -99,18 +125,24 @@ if (prod == null){
 }else{
    return (
     <div className="Produits">
+        
         <div className="infoproduits">
-            <img className="round" onClick={startFabrication} src={services.server + prod.logo} alt="logo"/>
-            <div className="qte">Quantité: {prod.quantite}</div>
-        </div>
+            <img onClick={startFabrication} className="round"  src={services.server + prod.logo} alt="logo"/>
+
+          <div className="qte">Quantité: {prod.quantite}</div>
+</div>
+       
            
         <div className="revenu">Revenu: {prod.revenu}</div>
             <div className="prixStand">
-                <button type="button">Acheter x{qtmultiChiffre()} Prix: {prixAchatMax(qtmultiChiffre())} </button>
+                <button type="button" onClick={acheterPtoduit} disabled={money < prixAchatMax(qtmultiChiffre())}>Acheter x{qtmultiChiffre()} Prix: {prixAchatMax(qtmultiChiffre())} </button>
             </div>
             <div className="temps">Temps: {prod.vitesse}s</div>
+
             <div className="progressBar">
-                <ProgressBar transitionDuration={"0.1s"} customLabel={" "} completed={progress}/>
+            <Box sx={{width: '50%'}}>
+         <ProgressBar transitionDuration={"0.1s"} customLabel={" "} completed={progress}/>
+        </Box>
             </div>
     </div>
    );

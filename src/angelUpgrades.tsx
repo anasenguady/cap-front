@@ -22,10 +22,10 @@ return(
 
 <div>
     <div className="modal">
-        <div> <h1 className="titleangelUpgrades">Faites des les angelUpgrades !</h1> </div>
+        <div> <h1 className="titleangelUpgrades">BUY YOUR angelUpgrades !</h1> </div>
 
         <div> { world.angelupgrades.pallier.filter(pallierAnge => !pallierAnge.unlocked).map(pallierAnge =>
-        <div key={pallier.idcible} className="managergrid">
+        <div key={pallier.idcible} className="angelgrid">
         
     <div className="logo">
         <img alt="upgradeslogo" className="round" src= {services.server + pallierAnge.logo}/>
@@ -36,7 +36,7 @@ return(
          <div className="upgradecost"> {pallierAnge.seuil} $</div>
     </div>
     <div onClick={() => buyAngelUpgrade}>
-        <button disabled={world.money < pallierAnge.seuil}> ACHETER </button>
+        <button className="btnangels" disabled={world.money < pallierAnge.seuil}> ACHETER </button>
     </div>
  </div>
 )
