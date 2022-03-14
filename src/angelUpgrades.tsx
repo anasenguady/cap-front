@@ -28,12 +28,12 @@ return(
         <div key={pallier.idcible} className="angelgrid">
         
     <div className="logo">
-        <img alt="upgradeslogo" className="round" src= {services.server + pallierAnge.logo}/>
+        <img alt="upgradeslogo" className="round" src= {services.server + pallierAnge.logo} />
 
     </div>
     <div className="infosupgrade">
          <div className="upgradename"> {pallierAnge.name} </div>
-         <div className="upgradecost"> {pallierAnge.seuil} $</div>
+         <div className="upgradecost"> {pallierAnge.seuil} Anges</div>
     </div>
     <div onClick={() => buyAngelUpgrade}>
         <button className="btnangels" disabled={world.money < pallierAnge.seuil}> ACHETER </button>

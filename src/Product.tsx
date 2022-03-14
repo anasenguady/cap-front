@@ -37,12 +37,11 @@ import Box from '@mui/material/Box';
 }, [])
 
 function startFabrication() {
-    console.log("clq")
-    
+    if (prod.quantite !=0){
     prod.timeleft=prod.vitesse
     prod.lastupdate = Date.now()
    setProgress(prod.progressbarvalue)
- }
+ }}
  
 
 function calcScore(){
@@ -135,9 +134,9 @@ if (prod == null){
            
         <div className="revenu">Revenu: {prod.revenu}</div>
             <div className="prixStand">
-                <button type="button" onClick={acheterPtoduit} disabled={money < prixAchatMax(qtmultiChiffre())}>Acheter x{qtmultiChiffre()} Prix: {prixAchatMax(qtmultiChiffre())} </button>
+                <button type="button"  onClick={acheterPtoduit} disabled={money < prixAchatMax(qtmultiChiffre())}>Acheter x{qtmultiChiffre()} Prix: {prixAchatMax(qtmultiChiffre())} </button>
             </div>
-            <div className="temps">Temps: {prod.vitesse}s</div>
+            <div className="temps">Temps: {prod.vitesse / 1000}s</div>
 
             <div className="progressBar">
             <Box sx={{width: '50%'}}>

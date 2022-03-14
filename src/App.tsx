@@ -8,6 +8,7 @@ import Manager from './Manager';
 import Angels from './Angels';
 import Upgrades from './cashUpgrades';
 import AngelUpgrades from './angelUpgrades';
+import Unlocks from './Unlocks';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
   const [pallier, setPallier]= useState(new Pallier())
   const [affangelUpgrades,setAngelUpgrades] = useState(false)
   const [username, setUsername] = useState("")
+  const [affUnlocks, setAffUnlocks] = useState(false)
 
   
 
@@ -43,14 +45,14 @@ function App() {
     addToScore(gain)
   
    }
-  /*function zero(){
+  function zero(){
      if (world.money < 0 ){
        
        world.money = 0
      }else{
        
      }
-   }*/
+   }
    
 
    function voirManagers(){
@@ -59,7 +61,7 @@ function App() {
       setAngels(false)
       setUpgrades(false)
       setAngelUpgrades(false)
-      
+      setAffUnlocks(false)
     }
     else {
       setManagers(false)
@@ -72,6 +74,7 @@ function App() {
       setManagers(false)
       setUpgrades(false)
       setAngelUpgrades(false)
+      setAffUnlocks(false)
     }
     else {
       setAngels(false)
@@ -84,17 +87,30 @@ function App() {
       setManagers(false)
       setAngels(false)
       setAngelUpgrades(false)
+      setAffUnlocks(false)
     }
     else {
       setUpgrades(false)
     }
   } 
+  function voirUnlocks(){
+    if (affUnlocks == false){
+      setAffUnlocks(true)
+      setUpgrades(false)
+      setManagers(false)
+      setAngels(false)
+      setAngelUpgrades(false)
+    }else{
+      setAffUnlocks(false)
+    }
+  }
   function voirAngelUpgrades(){
     if (affangelUpgrades ==false){
       setAngelUpgrades(true)
       setUpgrades(false)
       setManagers(false)
       setAngels(false)
+      setAffUnlocks(false)
     }
     else {
       setAngelUpgrades(false)
@@ -140,6 +156,7 @@ function App() {
     }
 
 
+
     
 
   return (
@@ -148,7 +165,7 @@ function App() {
  
       <div className="header">
         <div> <img id="logoMonde" src={services.server + world.logo} alt={"logo.png"}/><span id="worldName"> {world.name} </span></div>
-        <div className="money"><span dangerouslySetInnerHTML={{__html: transform(world.money)}} ></span>$</div>
+        <div className="money"><span dangerouslySetInnerHTML={{__html: transform(world.money)}} {...zero()} ></span>$</div>
         <div className="multi"> Multiplicateur :<button onClick={cycleMulti}> {qtmulti} </button>
       </div>
       <div className ="id"> <div> Username <input type="text" id="usernameInput" value={username} /></div> </div>
@@ -157,7 +174,7 @@ function App() {
 
     <div className="main">
       <div className="container1"> 
-        <button className="btncote"> Unlocks</button>
+        <button className="btncote" onClick={voirUnlocks}> Unlocks</button>
         <button className="btncote" onClick={voirUpgrades}> Cash Upgrades</button>
         <button className="btncote" onClick={voirAngelUpgrades}> Angel Upgrades</button>
         <button className="btncote" onClick={voirManagers}> Managers</button>
@@ -184,7 +201,12 @@ function App() {
     }
     { affangelUpgrades && <div className='btnangelUpgrades'>
     <AngelUpgrades world={world} services={ services } voirAngelUpgrades={voirAngelUpgrades} pallier={pallier}/></div>
-    }</div>
+    }
+
+{ affUnlocks && <div className='btnUnlocks'>
+<Unlocks world={world} services={ services }  voirUnlocks={voirUnlocks}/></div>
+}
+    </div>
     </div>
     </div>
   );

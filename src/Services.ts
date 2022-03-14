@@ -4,8 +4,8 @@ import { Pallier, Product, World } from './world';
 
 
 export class Services {
-    //server = "http://localhost:8081/"
-    server = "https://isiscapitalist.kk.kurasawa.fr/"
+    server = "http://localhost:8081/"
+    //server = "https://isiscapitalist.kk.kurasawa.fr/"
     api = this.server + "adventureisis/generic";
     user = "";
     constructor(user: string) {
